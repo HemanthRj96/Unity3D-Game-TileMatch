@@ -40,6 +40,13 @@ public class SKUAssetRepository : ScriptableObject
         return null;
     }
 
+    public List<SKUAssetContainer> GetAllSKUAssets()
+    {
+        if (_assetLookup == null || _assetLookup.Count == 0)
+            Initialize();
+        return _assets;
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Load SKU Assets from CSV")]
     public void LoadFromCSV()

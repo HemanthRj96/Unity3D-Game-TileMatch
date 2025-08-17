@@ -15,7 +15,7 @@ MonoBehaviour:
   _assets:
   - displayName: Coke Classic
     skuID: SKU-9384
-    prefab: {fileID: 4850359848109678689, guid: d75c5243dd44fc2499af9f2612bbe687, type: 3}
+    prefab: {fileID: 1075101437711589768, guid: 957de86556c0d0849b9201bda836c7a9, type: 3}
     icon: {fileID: 0}
     brandComponent:
       brand: 0
@@ -33,14 +33,14 @@ MonoBehaviour:
     entityTypeComponent:
       entityType: 0
     genericMatchComponent:
-      value: 0
+      value: 1
       color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Zero Sugar
-    skuID: SKU-5832
-    prefab: {fileID: 4850359848109678689, guid: 444e8a41bc8e6b44c959f314773034f1, type: 3}
+  - displayName: Coke Diet
+    skuID: SKU-2937
+    prefab: {fileID: 1075101437711589768, guid: 88a6b083449c66f41b29575819601f05, type: 3}
     icon: {fileID: 0}
     brandComponent:
-      brand: 1
+      brand: 0
     categoryComponent:
       category: 0
     packagingInfoComponent:
@@ -57,31 +57,53 @@ MonoBehaviour:
     genericMatchComponent:
       value: 0
       color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Pure
-    skuID: SKU-1029
-    prefab: {fileID: 4850359848109678689, guid: 3eb2a8ec9e4327249b0a801f3efbb77e, type: 3}
+  - displayName: Coke Cherry
+    skuID: SKU-7209
+    prefab: {fileID: 1075101437711589768, guid: 83f430d1d44b2b444bdb31ce8f8c077f, type: 3}
     icon: {fileID: 0}
     brandComponent:
-      brand: 2
+      brand: 0
     categoryComponent:
-      category: 1
+      category: 0
     packagingInfoComponent:
       size: 3
       containerType: 1
       isSingleServe: 1
     temperatureInfoComponent:
-      type: 2
+      type: 0
       isColdCompatible: 1
     zoneComponent:
-      zoneType: 2
+      zoneType: 3
     entityTypeComponent:
       entityType: 0
     genericMatchComponent:
-      value: 0
+      value: 2
+      color: {r: 0, g: 0, b: 0, a: 0}
+  - displayName: Coke Vanilla
+    skuID: SKU-6503
+    prefab: {fileID: 1075101437711589768, guid: 85003065b0b87034282b07eb669e35c0, type: 3}
+    icon: {fileID: 0}
+    brandComponent:
+      brand: 0
+    categoryComponent:
+      category: 0
+    packagingInfoComponent:
+      size: 0
+      containerType: 0
+      isSingleServe: 1
+    temperatureInfoComponent:
+      type: 0
+      isColdCompatible: 1
+    zoneComponent:
+      zoneType: 3
+    entityTypeComponent:
+      entityType: 0
+    genericMatchComponent:
+      value: 1
       color: {r: 0, g: 0, b: 0, a: 0}
   - displayName: Powerade Fruit Punch
     skuID: SKU-4756
-    prefab: {fileID: 0}
+    prefab: {fileID: 1075101437711589768, guid: 6a2b1b9db0e8db74e978d91e26d793a9, type: 3}
     icon: {fileID: 0}
     brandComponent:
       brand: 3
@@ -101,12 +123,56 @@ MonoBehaviour:
     genericMatchComponent:
       value: 0
       color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Diet
-    skuID: SKU-2937
-    prefab: {fileID: 0}
+  - displayName: SmartWater Pure
+    skuID: SKU-1029
+    prefab: {fileID: 1075101437711589768, guid: 3ef0270229034134ea2861a707728264, type: 3}
     icon: {fileID: 0}
     brandComponent:
-      brand: 0
+      brand: 2
+    categoryComponent:
+      category: 1
+    packagingInfoComponent:
+      size: 3
+      containerType: 1
+      isSingleServe: 1
+    temperatureInfoComponent:
+      type: 2
+      isColdCompatible: 1
+    zoneComponent:
+      zoneType: 2
+    entityTypeComponent:
+      entityType: 0
+    genericMatchComponent:
+      value: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
+  - displayName: SmartWater Black
+    skuID: SKU-6521
+    prefab: {fileID: 1075101437711589768, guid: dfea05da883ba224e96baf272b4905f5, type: 3}
+    icon: {fileID: 0}
+    brandComponent:
+      brand: 2
+    categoryComponent:
+      category: 1
+    packagingInfoComponent:
+      size: 1
+      containerType: 2
+      isSingleServe: 1
+    temperatureInfoComponent:
+      type: 1
+      isColdCompatible: 0
+    zoneComponent:
+      zoneType: 1
+    entityTypeComponent:
+      entityType: 0
+    genericMatchComponent:
+      value: 1
+      color: {r: 0, g: 0, b: 0, a: 0}
+  - displayName: Sprite Zero Sugar
+    skuID: SKU-5832
+    prefab: {fileID: 1075101437711589768, guid: c7f011ca81b4a0a49a92150438d388cc, type: 3}
+    icon: {fileID: 0}
+    brandComponent:
+      brand: 1
     categoryComponent:
       category: 0
     packagingInfoComponent:
@@ -125,76 +191,10 @@ MonoBehaviour:
       color: {r: 0, g: 0, b: 0, a: 0}
   - displayName: Sprite Grape
     skuID: SKU-8193
-    prefab: {fileID: 0}
+    prefab: {fileID: 1075101437711589768, guid: 3dab6f7f146951f44b76142335f78a4c, type: 3}
     icon: {fileID: 0}
     brandComponent:
       brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Berry
-    skuID: SKU-6521
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Strawberry
-    skuID: SKU-3847
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Cherry
-    skuID: SKU-7209
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
     categoryComponent:
       category: 0
     packagingInfoComponent:
@@ -213,887 +213,7 @@ MonoBehaviour:
       color: {r: 0, g: 0, b: 0, a: 0}
   - displayName: Sprite Lemon
     skuID: SKU-5982
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Sport
-    skuID: SKU-4411
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 2
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 2
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Blue Raspberry
-    skuID: SKU-2874
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Vanilla
-    skuID: SKU-6503
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Ginger
-    skuID: SKU-9184
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Kiwi
-    skuID: SKU-7753
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Orange
-    skuID: SKU-3098
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Zero
-    skuID: SKU-4987
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Cranberry
-    skuID: SKU-2098
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Peach
-    skuID: SKU-8456
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 2
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 2
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Grape
-    skuID: SKU-3321
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Diet
-    skuID: SKU-7001
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Raspberry
-    skuID: SKU-4002
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Strawberry
-    skuID: SKU-5003
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Lemon Lime
-    skuID: SKU-6004
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Diet
-    skuID: SKU-7005
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Cucumber
-    skuID: SKU-8006
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Watermelon
-    skuID: SKU-9007
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 2
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 2
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Tropical
-    skuID: SKU-1008
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Lime
-    skuID: SKU-2009
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Zero
-    skuID: SKU-3010
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Mango
-    skuID: SKU-4011
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Raspberry
-    skuID: SKU-5012
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Plus
-    skuID: SKU-6013
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Zero Sugar
-    skuID: SKU-7014
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Cucumber
-    skuID: SKU-8015
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 2
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 2
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Berry
-    skuID: SKU-9016
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Coffee
-    skuID: SKU-1017
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Tea
-    skuID: SKU-2018
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Mint
-    skuID: SKU-3019
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Cherry
-    skuID: SKU-4020
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Cinnamon
-    skuID: SKU-5021
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Cola
-    skuID: SKU-6022
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Pomegranate
-    skuID: SKU-7023
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 2
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 2
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Watermelon
-    skuID: SKU-8024
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Lime
-    skuID: SKU-9025
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Lemon
-    skuID: SKU-1026
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 0
-      containerType: 0
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: SmartWater Ginger
-    skuID: SKU-2027
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 2
-    categoryComponent:
-      category: 1
-    packagingInfoComponent:
-      size: 1
-      containerType: 2
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 1
-      isColdCompatible: 0
-    zoneComponent:
-      zoneType: 1
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Berry
-    skuID: SKU-3028
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Diet
-    skuID: SKU-4029
-    prefab: {fileID: 0}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Zero Sugar
-    skuID: SKU-5030
-    prefab: {fileID: 0}
+    prefab: {fileID: 1075101437711589768, guid: f4b354b039f9d564cae0284670f54426, type: 3}
     icon: {fileID: 0}
     brandComponent:
       brand: 1

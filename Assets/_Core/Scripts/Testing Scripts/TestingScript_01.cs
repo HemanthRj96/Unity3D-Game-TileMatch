@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
+using System.Data;
 
 
 public class TestingScript_01 : MonoBehaviour
@@ -8,26 +10,51 @@ public class TestingScript_01 : MonoBehaviour
     public GridManager manager;
     public GridCellSelector handle;
     public SKUEntityFactory factory;
-    public string skuID;
+    public BrandType brandType;
+    public int value = 0;
+
+    SKUFilter someFilter;
+    List<SKUEntity> filteredSKUs = new List<SKUEntity>();
+    event Action onFixedUpdate = delegate { };
 
 
-    private void Awake()
+    private void Start()
     {
-        handle.OnCellSelectionEvent += Handle_OnCellSelectionEvent;
+        someFilter = new SKUFilter();
+        someFilter.AddCondition(sku => sku.GetComponent<BrandComponent>()?.brand == brandType);
+        someFilter.AddCondition(sku => sku.GetComponent<GenericMatchComponent>()?.value == value);
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        handle.OnCellSelectionEvent -= Handle_OnCellSelectionEvent;
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (filteredSKUs.Count > 0)
+            {
+                foreach (var entity in filteredSKUs)
+                {
+                    if (entity != null && entity.HasComponent<UnityMetadataComponent>())
+                    {
+                        onFixedUpdate -= entity.GetComponent<UnityMetadataComponent>().AnimateIdle;
+                        entity.GetComponent<UnityMetadataComponent>().ResetAnimation();
+                    }
+                }
+
+                filteredSKUs.Clear();
+            }
+
+            filteredSKUs = someFilter.Filter(manager.ExtractAllEntitiesFromGrid());
+
+            foreach (var entity in filteredSKUs)
+            {
+                if (entity != null && entity.HasComponent<UnityMetadataComponent>())
+                    onFixedUpdate += entity.GetComponent<UnityMetadataComponent>().AnimateIdle;
+            }
+        }
     }
 
-    private void Handle_OnCellSelectionEvent()
+    private void FixedUpdate()
     {
-        var cell = handle.GetCurrentCellSelection();
-
-        if (cell == null) return;
-
-
-        Debug.Log($"{cell.Index}");
+        onFixedUpdate();
     }
 }

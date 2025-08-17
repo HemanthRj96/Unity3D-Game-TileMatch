@@ -31,7 +31,9 @@ public class SKUEntityFactory : MonoBehaviour
         GameObject newGameObject;
 
         if (assetContainer.prefab != null)
+        {
             newGameObject = Instantiate(assetContainer.prefab, parent);
+        }
         else
         {
             newGameObject = new GameObject(assetContainer.displayName);

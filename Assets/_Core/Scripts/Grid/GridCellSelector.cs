@@ -28,7 +28,7 @@ public class GridCellSelector : MonoBehaviour
 
     // Properties
     
-    public event Action OnCellSelectionEvent = delegate { };
+    public event Action<Vector3Int> OnCellSelectionEvent = delegate { };
 
 
     // Public Methods
@@ -63,7 +63,7 @@ public class GridCellSelector : MonoBehaviour
         if (cell == null) return;
         _previousCellSelection = _currentCellSelection;
         _currentCellSelection = cell;
-        OnCellSelectionEvent?.Invoke();
+        OnCellSelectionEvent?.Invoke(cell.Index);
     }
 
     private void handleHover()

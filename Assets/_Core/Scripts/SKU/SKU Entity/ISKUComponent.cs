@@ -73,40 +73,46 @@ public class UnityMetadataComponent : ISKUComponent
 {
     // Fields
 
-    public GameObject prefab;
+    public GameObject skuGameObject;
     public Sprite iconSprite;
     public MeshRenderer meshRenderer;
 
     private float _idleTime;
     private Quaternion _initialRotation;
+    private Vector3 _intialPosition;
 
 
     // Constructors
 
     public UnityMetadataComponent(GameObject go, Sprite icon)
     {
-        prefab = go;
+        skuGameObject = go;
         iconSprite = icon;
-        _initialRotation = prefab.transform.rotation;
+        _initialRotation = skuGameObject.transform.rotation;
     }
 
 
     // Public Methods
 
-    public void DisableComponent() => prefab.SetActive(false);
+    public void DisableComponent() => skuGameObject.SetActive(false);
 
-    public void EnableComponent() => prefab.SetActive(true);
+    public void EnableComponent() => skuGameObject.SetActive(true);
 
-    public void ApplyVisuals(Color color, Sprite sprite)
+    public void ApplyVisuals(Color color)
     {
         if (meshRenderer != null)
             meshRenderer.material.color = color;
     }
 
+    public void ResetAnimation()
+    {
+        skuGameObject.transform.rotation = _initialRotation;
+    }
+
     public void AnimateIdle()
     {
-        _idleTime += Time.deltaTime;
-        float rotationAngle = Mathf.Sin(_idleTime * 2f) * 10f;
-        prefab.transform.rotation = _initialRotation * Quaternion.Euler(0, rotationAngle, 0);
+        _idleTime += Time.deltaTime; 
+        float rotationAngle = Mathf.Sin(_idleTime * 2f) * 10f; 
+        skuGameObject.transform.rotation = _initialRotation * Quaternion.Euler(rotationAngle, rotationAngle, rotationAngle);
     }
 }
