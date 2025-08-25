@@ -9,11 +9,6 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
 {
     // Fields
 
-    private string name;
-    private int age;
-    private string gender;
-
-
     private Vector3 _gridOrigin;
     private Vector3Int _gridDimension;
     private Vector3 _cellDimension;
