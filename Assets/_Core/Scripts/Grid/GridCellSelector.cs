@@ -2,140 +2,64 @@
 using UnityEngine;
 
 
-/// <summary>
-/// This is the core interaction system that can be used to select a content inside the grid, the functionality has to be customized
-/// for better usability
-/// </summary>
+
 [RequireComponent(typeof(GridManager))]
 public class GridCellSelector : MonoBehaviour
 {
+    // Events to allow other components to react without direct coupling.
+    public static event Action<Vector3Int> OnCellSelected;
+    public static event Action OnCellDeselected;
+
     // Fields
-    
-    [SerializeField] private GridSelectionMode _selectionMode = GridSelectionMode.OnButtonDown;
+
     [SerializeField] private bool _isEnabled = false;
     [SerializeField] private GameObject _gridTilePrefab;
     [SerializeField] private Material _highlightMaterial;
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _selectedMaterial;
 
-    private GridManager _interactionGrid;
-    private Cell<SKUEntity> _previousCellSelection;
-    private Cell<SKUEntity> _currentCellSelection;
-    private GameObject _highlightedTile;
-    private GameObject _selectedTile;
-    private bool _selectedOnDown = false; // New boolean to track the selection state
+    private GridManager _gridManager;
+    private GameObject _hoveredTileGameObject;
+    private GameObject _selectedTileGameObject;
 
+    // Public methods
 
-    // Properties
-    
-    public event Action<Vector3Int> OnCellSelectionEvent = delegate { };
-
-
-    // Public Methods
-    
-    public void SetSelectorState(bool state) => _isEnabled = state;
-    public Cell<SKUEntity> GetCurrentCellSelection() => _currentCellSelection;
-    public Cell<SKUEntity> GetPreviousCellSelection() => _previousCellSelection;
-
-
-    // Private Methods
-    
-    private bool trySelectCell(out Cell<SKUEntity> selectedCell)
+    /// <summary>
+    /// Sets the active state of the selector.
+    /// </summary>
+    public void SetSelectorState(bool state)
     {
-        selectedCell = null;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        _isEnabled = state;
+        if (!state)
         {
-            GridTile gridTile = hit.collider.GetComponent<GridTile>();
-            if (gridTile != null)
+            DeselectCurrentCell();
+            clearHoverVisuals();
+        }
+    }
+
+    /// <summary>
+    /// Deselects the currently selected cell, resetting its visual state.
+    /// This method can be called by other scripts to force deselection.
+    /// </summary>
+    public void DeselectCurrentCell()
+    {
+        if (_selectedTileGameObject != null)
+        {
+            // Reset the material of the previously selected tile.
+            if (_selectedTileGameObject.TryGetComponent<Renderer>(out Renderer rend))
             {
-                selectedCell = _interactionGrid.Grid.GetCell(gridTile.Index);
-                return selectedCell != null;
+                rend.material = _defaultMaterial;
             }
-        }
-        return false;
-    }
-
-    private void onCellSelection(Cell<SKUEntity> cell)
-    {
-        if (cell == null) return;
-        _previousCellSelection = _currentCellSelection;
-        _currentCellSelection = cell;
-        OnCellSelectionEvent?.Invoke(cell.Index);
-    }
-
-    private void handleHover()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            GameObject hitObject = hit.collider.gameObject;
-            if (hitObject != _highlightedTile)
-            {
-                // Reset previous highlight
-                if (_highlightedTile != null && _highlightedTile != _selectedTile)
-                {
-                    Renderer rend = _highlightedTile.GetComponent<Renderer>();
-                    if (rend != null) rend.material = _defaultMaterial;
-                }
-
-                // Apply new highlight only if it's not the selected tile
-                if (hitObject != _selectedTile)
-                {
-                    Renderer hitRenderer = hitObject.GetComponent<Renderer>();
-                    if (hitRenderer != null && hitObject.GetComponent<GridTile>() != null)
-                    {
-                        hitRenderer.material = _highlightMaterial;
-                        _highlightedTile = hitObject;
-                    }
-                }
-            }
-        }
-        else
-        {
-            // Reset highlight if not hovering over any tile and it's not the selected tile
-            if (_highlightedTile != null && _highlightedTile != _selectedTile)
-            {
-                Renderer rend = _highlightedTile.GetComponent<Renderer>();
-                if (rend != null) rend.material = _defaultMaterial;
-            }
-            _highlightedTile = null;
+            _selectedTileGameObject = null;
+            OnCellDeselected?.Invoke();
         }
     }
-
-    private void generateGridTiles()
-    {
-        var grid = _interactionGrid.Grid;
-        Vector3 tileZOffset = Vector3.forward * (grid.CellDimension.z / 2);
-        Vector3 scaleValue = grid.CellDimension * 0.98f;
-        scaleValue.z = 1;
-
-        foreach (var cell in grid)
-        {
-            var tile = Instantiate(_gridTilePrefab, grid.GetCellCenter(cell.Index) - tileZOffset, Quaternion.identity);
-            tile.transform.localScale = scaleValue;
-            tile.transform.parent = transform;
-
-            // Add GridTile component and set its index
-            GridTile gridTileComponent = tile.AddComponent<GridTile>();
-            gridTileComponent.Index = cell.Index;
-
-            // Store the default material
-            Renderer rend = tile.GetComponent<Renderer>();
-            if (rend != null) rend.material = _defaultMaterial;
-        }
-    }
-
 
     // Lifecycle methods
-    
+
     private void Start()
     {
-        _interactionGrid = GetComponent<GridManager>();
+        _gridManager = GetComponent<GridManager>();
         if (_gridTilePrefab.GetComponent<Collider>() == null)
         {
             _gridTilePrefab.AddComponent<BoxCollider>();
@@ -149,51 +73,139 @@ public class GridCellSelector : MonoBehaviour
 
         handleHover();
 
-        // Handle mouse down
         if (Input.GetMouseButtonDown(0))
         {
-            Cell<SKUEntity> selectedCell;
-            if (trySelectCell(out selectedCell))
-            {
-                onCellSelection(selectedCell);
-
-                // Set the visual state to selected
-                if (_highlightedTile != null)
-                {
-                    Renderer rend = _highlightedTile.GetComponent<Renderer>();
-                    if (rend != null)
-                    {
-                        rend.material = _selectedMaterial;
-                    }
-                    _selectedTile = _highlightedTile;
-                    _selectedOnDown = true;
-                }
-            }
-        }
-
-        // Handle mouse up
-        if (Input.GetMouseButtonUp(0) && _selectedOnDown)
-        {
-            if (_selectedTile != null)
-            {
-                Renderer rend = _selectedTile.GetComponent<Renderer>();
-                if (rend != null)
-                {
-                    rend.material = _defaultMaterial;
-                }
-                _selectedTile = null;
-            }
-            _selectedOnDown = false;
+            handleSelection();
         }
     }
 
 
-    // Nested Types
+    // Private methods
 
-    public enum GridSelectionMode
+    /// <summary>
+    /// Generates the visual grid tiles for raycasting.
+    /// </summary>
+    private void generateGridTiles()
     {
-        Continous,
-        OnButtonUp,
-        OnButtonDown
+        var grid = _gridManager.Grid;
+        // The offset for the tiles is half the cell depth.
+        Vector3 tileZOffset = Vector3.forward * (grid.CellDimension.z / 2);
+        // The scale is slightly smaller than the cell to make grid lines visible.
+        Vector3 scaleValue = grid.CellDimension * 0.98f;
+        // Tiles should be thin, so we set the Z scale to 1.
+        scaleValue.z = 1;
+
+        foreach (var cell in grid)
+        {
+            var tile = Instantiate(_gridTilePrefab, grid.GetCellCenter(cell.Index) - tileZOffset, Quaternion.identity, transform);
+            tile.name = $"GridTile_{cell.Index.x}_{cell.Index.y}_{cell.Index.z}";
+
+            tile.transform.localScale = scaleValue;
+
+            // Add GridTile component and set its index.
+            GridTile gridTileComponent = tile.AddComponent<GridTile>();
+            gridTileComponent.Index = cell.Index;
+
+            // Store the default material.
+            if (tile.TryGetComponent<Renderer>(out Renderer rend))
+            {
+                rend.material = _defaultMaterial;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Handles the visual feedback for hovering over grid tiles.
+    /// </summary>
+    private void handleHover()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        GridTile newHoveredTile = null;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // Check if the raycast hits a GridTile.
+            if (hit.collider.TryGetComponent<GridTile>(out newHoveredTile))
+            {
+                // If we've moved to a new tile, update the visuals.
+                if (_hoveredTileGameObject != newHoveredTile.gameObject)
+                {
+                    // Clear the previous hover effect if it's not the selected tile.
+                    clearHoverVisuals();
+                    // Apply a new hover effect.
+                    if (_hoveredTileGameObject != _selectedTileGameObject)
+                    {
+                        if (newHoveredTile.TryGetComponent<Renderer>(out Renderer rend))
+                        {
+                            rend.material = _highlightMaterial;
+                        }
+                    }
+                    _hoveredTileGameObject = newHoveredTile.gameObject;
+                }
+            }
+        }
+        else
+        {
+            // Clear hover effect if the mouse is not over any tile.
+            clearHoverVisuals();
+            _hoveredTileGameObject = null;
+        }
+    }
+
+    /// <summary>
+    /// Resets the material of the previously hovered tile.
+    /// </summary>
+    private void clearHoverVisuals()
+    {
+        if (_hoveredTileGameObject != null && _hoveredTileGameObject != _selectedTileGameObject)
+        {
+            if (_hoveredTileGameObject.TryGetComponent<Renderer>(out Renderer rend))
+            {
+                rend.material = _defaultMaterial;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Handles the selection of a grid cell.
+    /// </summary>
+    private void handleSelection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.TryGetComponent<GridTile>(out GridTile selectedTile))
+            {
+                // If a new tile is selected, deselect the old one first.
+                if (_selectedTileGameObject != selectedTile.gameObject)
+                {
+                    DeselectCurrentCell();
+
+                    // Apply the new selection.
+                    _selectedTileGameObject = selectedTile.gameObject;
+                    if (_selectedTileGameObject.TryGetComponent<Renderer>(out Renderer rend))
+                    {
+                        rend.material = _selectedMaterial;
+                    }
+
+                    // Fire the event, passing the grid's index.
+                    OnCellSelected?.Invoke(selectedTile.Index);
+                }
+                else
+                {
+                    // If the same tile is clicked again, deselect it.
+                    DeselectCurrentCell();
+                }
+            }
+        }
+        else
+        {
+            // If the user clicks off the grid, deselect the current cell.
+            DeselectCurrentCell();
+        }
     }
 }

@@ -4,7 +4,11 @@ using System;
 using System.Linq;
 
 
-
+/// <summary>
+/// The core data model for a Stock Keeping Unit (SKU). This is a simple data container
+/// that uses a component-based approach to store various properties of an SKU.
+/// It is decoupled from any Unity MonoBehaviour and can be easily serialized.
+/// </summary>
 public class SKUEntity
 {
     private readonly Dictionary<Type, ISKUComponent> _components = new Dictionary<Type, ISKUComponent>();

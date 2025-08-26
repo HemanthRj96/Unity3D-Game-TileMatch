@@ -17,13 +17,13 @@ public class PlacementManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _cellSelector.OnCellSelectionEvent += HandleGridCellSelected;
+        //_cellSelector.OnCellSelectionEvent += HandleGridCellSelected;
         InventoryUI.OnSKUSelected += HandleSKUSelected;
     }
 
     private void OnDisable()
     {
-        _cellSelector.OnCellSelectionEvent -= HandleGridCellSelected;
+        //_cellSelector.OnCellSelectionEvent -= HandleGridCellSelected;
         InventoryUI.OnSKUSelected -= HandleSKUSelected;
     }
 
@@ -51,7 +51,7 @@ public class PlacementManager : MonoBehaviour
                                           (Vector3.up * (_gridManager.Grid.CellDimension.y / 2));
 
         // Load the SKUEntity into the grid
-        _gridManager.LoadEntityToGridAt(newSkuEntity, _selectedGridIndex.Value);
+        //_gridManager.LoadEntityToGridAt(newSkuEntity, _selectedGridIndex.Value);
         _selectedGridIndex = null; // Reset for next placement
         _inventoryUI.TogglePanel(false);
     }

@@ -244,12 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b432db23af79cd4bbbf76a8cae77b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectionMode: 1
   _isEnabled: 1
   _gridTilePrefab: {fileID: 3424014701164409185, guid: c146e2b520cb0c14bb937cfaea537d68, type: 3}
   _highlightMaterial: {fileID: 2100000, guid: 873d243f455641940b94be53bed42e47, type: 2}
   _defaultMaterial: {fileID: 2100000, guid: 6ca151fc86489224192a2118671ee2f8, type: 2}
-  _selectedMaterial: {fileID: 2100000, guid: 798c0529e6a27134c8902697a1523985, type: 2}
+  _selectedMaterial: {fileID: 2100000, guid: 252a9352f6e49ca4598740211e8999c4, type: 2}
 --- !u!114 &82938805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +267,8 @@ MonoBehaviour:
     gridOffset: {x: -3, y: -3.75, z: 0}
     shouldDrawGizmos: 1
     gridLineColor: {r: 0, g: 1, b: 0, a: 1}
+  _skuRepository: {fileID: 0}
+  _skuFactory: {fileID: 0}
 --- !u!1 &213437601
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,8 +574,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22748896, y: 0.0029214553, z: -0.0006891224, w: 0.97377604}
-  m_LocalPosition: {x: -0.22027782, y: 3.7090178, z: -7.658119}
+  m_LocalRotation: {x: 0.14373633, y: 0.19022056, z: -0.028165242, w: 0.9707537}
+  m_LocalPosition: {x: -2.9681554, y: 2.4172502, z: -9.605558}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -797,7 +798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &666148437
 Transform:
   m_ObjectHideFlags: 0
@@ -820,7 +821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666148436}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e61b8dd0c2d159540a527599fa5328d0, type: 3}
   m_Name: 
@@ -1958,7 +1959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1703186880
 Transform:
   m_ObjectHideFlags: 0
@@ -1981,7 +1982,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703186879}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3958f081db98bb8469e41d96b9c2d81f, type: 3}
   m_Name: 

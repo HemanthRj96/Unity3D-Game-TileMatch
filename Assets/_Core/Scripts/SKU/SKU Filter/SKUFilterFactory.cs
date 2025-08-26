@@ -1,40 +1,111 @@
 ﻿using UnityEngine;
 
+
+/// <summary>
+/// A factory for creating various types of SKU filters.
+/// </summary>
 public static class SKUFilterFactory
 {
+    // Brand Filters
     public static ISKUFilter CreateBrandFilter(BrandType brand)
     {
-        SKUFilter filter = new SKUFilter();
-        filter.AddCondition(sku => sku.GetComponent<BrandComponent>()?.brand == brand);
+        return new SimpleSKUFilter(sku => sku.GetComponent<BrandComponent>()?.brand == brand);
+    }
 
-        return filter;
+    public static ISKUFilter CreateMultipleBrandFilter(params BrandType[] brands)
+    {
+        var orFilter = new CompositeSKUFilter(LogicalOperator.OR);
+        foreach (var brand in brands)
+        {
+            orFilter.AddFilter(CreateBrandFilter(brand));
+        }
+        return orFilter;
+    }
+
+    // Category Filters
+    public static ISKUFilter CreateCategoryFilter(CategoryType category)
+    {
+        return new SimpleSKUFilter(sku => sku.GetComponent<CategoryComponent>()?.category == category);
+    }
+
+    public static ISKUFilter CreateMultipleCategoryFilter(params CategoryType[] categories)
+    {
+        var orFilter = new CompositeSKUFilter(LogicalOperator.OR);
+        foreach (var category in categories)
+        {
+            orFilter.AddFilter(CreateCategoryFilter(category));
+        }
+        return orFilter;
+    }
+
+    // Packaging Filters
+    public static ISKUFilter CreatePackagingSizeFilter(PackagingSize size)
+    {
+        return new SimpleSKUFilter(sku => sku.GetComponent<PackagingInfoComponent>()?.size == size);
+    }
+
+    public static ISKUFilter CreateContainerTypeFilter(ContainerType containerType)
+    {
+        return new SimpleSKUFilter(sku => sku.GetComponent<PackagingInfoComponent>()?.containerType == containerType);
+    }
+
+    public static ISKUFilter CreateIsSingleServeFilter(bool isSingleServe)
+    {
+        return new SimpleSKUFilter(sku => sku.GetComponent<PackagingInfoComponent>()?.isSingleServe == isSingleServe);
+    }
+
+    // Temperature Filters
+    public static ISKUFilter CreateTemperatureTypeFilter(TemperatureType type)
+    {
+        return new SimpleSKUFilter(sku => sku.GetComponent<TemperatureInfoComponent>()?.type == type);
     }
 
     public static ISKUFilter CreateColdCompatibleFilter()
     {
-        return new SKUFilter().AddCondition
-        (
-            sku => sku.GetComponent<TemperatureInfoComponent>()?.isColdCompatible ?? false
-        );
+        return new SimpleSKUFilter(sku => sku.GetComponent<TemperatureInfoComponent>()?.isColdCompatible ?? false);
     }
 
-    public static ISKUFilter CreateGenericColorFilter(Color[] color)
+    // Zone Filters
+    public static ISKUFilter CreateZoneFilter(ZoneType zone)
     {
-        SKUFilter colorFilter = new SKUFilter();
-
-        foreach (Color c in color)
-            colorFilter.AddCondition(sku => sku.GetComponent<GenericMatchComponent>()?.color == c);
-
-        return colorFilter;
+        return new SimpleSKUFilter(sku => sku.GetComponent<ZoneComponent>()?.zoneType == zone);
     }
 
-    public static ISKUFilter CreateGenericIDFilter(int[] ids)
+    // Entity Type Filters
+    public static ISKUFilter CreateEntityTypeFilter(EntityType entityType)
     {
-        SKUFilter colorFilter = new SKUFilter();
+        return new SimpleSKUFilter(sku => sku.GetComponent<EntityTypeComponent>()?.entityType == entityType);
+    }
 
+    // Generic Match Filters
+    public static ISKUFilter CreateGenericColorFilter(params Color[] colors)
+    {
+        var orFilter = new CompositeSKUFilter(LogicalOperator.OR);
+        foreach (Color c in colors)
+        {
+            orFilter.AddFilter(new SimpleSKUFilter(sku => sku.GetComponent<GenericMatchComponent>()?.color == c));
+        }
+        return orFilter;
+    }
+
+    public static ISKUFilter CreateGenericIDFilter(params int[] ids)
+    {
+        var orFilter = new CompositeSKUFilter(LogicalOperator.OR);
         foreach (int id in ids)
-            colorFilter.AddCondition(sku => sku.GetComponent<GenericMatchComponent>()?.value == id);
+        {
+            orFilter.AddFilter(new SimpleSKUFilter(sku => sku.GetComponent<GenericMatchComponent>()?.value == id));
+        }
+        return orFilter;
+    }
 
-        return colorFilter;
+    // Composite Filter
+    public static ISKUFilter CreateCompositeFilter(LogicalOperator op, params ISKUFilter[] filters)
+    {
+        var compositeFilter = new CompositeSKUFilter(op);
+        foreach (var filter in filters)
+        {
+            compositeFilter.AddFilter(filter);
+        }
+        return compositeFilter;
     }
 }

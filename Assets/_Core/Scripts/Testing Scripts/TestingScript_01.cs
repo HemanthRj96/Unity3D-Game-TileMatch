@@ -13,16 +13,16 @@ public class TestingScript_01 : MonoBehaviour
     public BrandType brandType;
     public int value = 0;
 
-    SKUFilter someFilter;
+    SimpleSKUFilter someFilter;
     List<SKUEntity> filteredSKUs = new List<SKUEntity>();
     event Action onFixedUpdate = delegate { };
 
 
     private void Start()
     {
-        someFilter = new SKUFilter();
-        someFilter.AddCondition(sku => sku.GetComponent<BrandComponent>()?.brand == brandType);
-        someFilter.AddCondition(sku => sku.GetComponent<GenericMatchComponent>()?.value == value);
+        //someFilter = new SimpleSKUFilter();
+        //someFilter.AddCondition(sku => sku.GetComponent<BrandComponent>()?.brand == brandType);
+        //someFilter.AddCondition(sku => sku.GetComponent<GenericMatchComponent>()?.value == value);
     }
 
     private void Update()
@@ -43,7 +43,7 @@ public class TestingScript_01 : MonoBehaviour
                 filteredSKUs.Clear();
             }
 
-            filteredSKUs = someFilter.Filter(manager.ExtractAllEntitiesFromGrid());
+            //filteredSKUs = someFilter.Filter(manager.ExtractAllEntitiesFromGrid());
 
             foreach (var entity in filteredSKUs)
             {
