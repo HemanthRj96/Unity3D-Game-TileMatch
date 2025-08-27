@@ -78,7 +78,7 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
                     var cell = new Cell<TType>();
                     cell.Index = new Vector3Int(x, y, z);
                     cell.IsUsable = true;
-                    cell.Entity = new TType();
+                    cell.Entity = null;
 
                     _cellArray3D[x, y, z] = cell;
                     _cellArray1D[x + y * GridDimension.x + z * GridDimension.x * GridDimension.y] = cell;

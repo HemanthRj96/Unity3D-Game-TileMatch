@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Random = UnityEngine.Random;
+
 
 /// <summary>
 /// Core component for managing the 3D grid, entities, and their manipulation.
@@ -16,7 +18,6 @@ public class GridManager : MonoBehaviour
 
     [Header("Data & Factories")]
     [SerializeField] private SKUAssetRepository _skuRepository;
-    // Assuming SKUAssetFactory is a typo and should be SKUEntityFactory
     [SerializeField] private SKUEntityFactory _skuFactory;
 
     // The core data structure for the grid.
@@ -27,6 +28,17 @@ public class GridManager : MonoBehaviour
     public static event Action<Vector3Int> OnEntityDespawned;
     public static event Action OnGridCleared;
 
+    /// <summary>
+    /// Defines the type of pattern to spawn.
+    /// </summary>
+    public enum PatternType
+    {
+        Row,
+        Column,
+        Depth,
+        Chunk,
+        Random
+    }
 
     // Public Methods
 
@@ -75,7 +87,14 @@ public class GridManager : MonoBehaviour
     /// <param name="gridIndex">The index of the cell to clear.</param>
     public bool DespawnEntityAt(Vector3Int gridIndex)
     {
+        if (Grid.GetCellUsability(gridIndex))
+        {
+            Debug.LogWarning($"No entity found at index {gridIndex}. Nothing to despawn.");
+            return false;
+        }
+
         SKUEntity entity = Grid.GetCellContent(gridIndex);
+
         if (entity == null)
         {
             Debug.LogWarning($"No entity found at index {gridIndex}. Nothing to despawn.");
@@ -125,6 +144,48 @@ public class GridManager : MonoBehaviour
             {
                 SpawnEntityAt(skuId, index);
             }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a complex pattern of SKUs based on the specified pattern type.
+    /// This method can spawn rows, columns, depth slices, or chunks of SKUs.
+    /// </summary>
+    /// <param name="patternType">The type of pattern to spawn (Row, Column, Depth, Chunk, Random).</param>
+    /// <param name="skuId">The SKU ID to spawn. Required for non-random patterns.</param>
+    /// <param name="startIndex">The starting index for the pattern (used for Row, Column, Depth, and Chunk).</param>
+    /// <param name="endIndex">The ending index for a Chunk pattern.</param>
+    /// <param name="clearFirst">If true, clears the entire grid before spawning the new pattern.</param>
+    public void SpawnComplexPattern(PatternType patternType, string skuId = null, Vector3Int startIndex = default, Vector3Int endIndex = default, bool clearFirst = true)
+    {
+        if (clearFirst)
+        {
+            ClearGrid();
+        }
+
+        if (patternType != PatternType.Random && string.IsNullOrEmpty(skuId))
+        {
+            Debug.LogError("SKU ID is required for non-random patterns.");
+            return;
+        }
+
+        switch (patternType)
+        {
+            case PatternType.Row:
+                _spawnRow(skuId, startIndex.y);
+                break;
+            case PatternType.Column:
+                _spawnColumn(skuId, startIndex.x);
+                break;
+            case PatternType.Depth:
+                _spawnDepthSlice(skuId, startIndex.z);
+                break;
+            case PatternType.Chunk:
+                _spawnChunk(skuId, startIndex, endIndex);
+                break;
+            case PatternType.Random:
+                _spawnRandom();
+                break;
         }
     }
 
@@ -263,6 +324,126 @@ public class GridManager : MonoBehaviour
         // We re-instantiate the grid here to allow for editor gizmo drawing without play mode.
         Grid = new Grid<SKUEntity>(_gridConfig.gridOffset + transform.position, _gridConfig.gridDimension, _gridConfig.cellDimension);
         Grid.DrawGridGizmos(_gridConfig.gridLineColor);
+    }
+
+
+    // Private helper methods for spawning patterns
+
+    /// <summary>
+    /// Spawns a full row of a given SKU.
+    /// </summary>
+    private void _spawnRow(string skuId, int rowIndex)
+    {
+        if (rowIndex < 0 || rowIndex >= Grid.GridDimension.y)
+        {
+            Debug.LogWarning($"Invalid row index: {rowIndex}. Must be between 0 and {Grid.GridDimension.y - 1}.");
+            return;
+        }
+
+        for (int x = 0; x < Grid.GridDimension.x; x++)
+        {
+            for (int z = 0; z < Grid.GridDimension.z; z++)
+            {
+                SpawnEntityAt(skuId, new Vector3Int(x, rowIndex, z));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a full column of a given SKU.
+    /// </summary>
+    private void _spawnColumn(string skuId, int columnIndex)
+    {
+        if (columnIndex < 0 || columnIndex >= Grid.GridDimension.x)
+        {
+            Debug.LogWarning($"Invalid column index: {columnIndex}. Must be between 0 and {Grid.GridDimension.x - 1}.");
+            return;
+        }
+
+        for (int y = 0; y < Grid.GridDimension.y; y++)
+        {
+            for (int z = 0; z < Grid.GridDimension.z; z++)
+            {
+                SpawnEntityAt(skuId, new Vector3Int(columnIndex, y, z));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a full depth slice of a given SKU.
+    /// </summary>
+    private void _spawnDepthSlice(string skuId, int depthIndex)
+    {
+        if (depthIndex < 0 || depthIndex >= Grid.GridDimension.z)
+        {
+            Debug.LogWarning($"Invalid depth index: {depthIndex}. Must be between 0 and {Grid.GridDimension.z - 1}.");
+            return;
+        }
+
+        for (int x = 0; x < Grid.GridDimension.x; x++)
+        {
+            for (int y = 0; y < Grid.GridDimension.y; y++)
+            {
+                SpawnEntityAt(skuId, new Vector3Int(x, y, depthIndex));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a rectangular chunk of a given SKU.
+    /// </summary>
+    private void _spawnChunk(string skuId, Vector3Int start, Vector3Int end)
+    {
+        int startX = Mathf.Min(start.x, end.x);
+        int endX = Mathf.Max(start.x, end.x);
+        int startY = Mathf.Min(start.y, end.y);
+        int endY = Mathf.Max(start.y, end.y);
+        int startZ = Mathf.Min(start.z, end.z);
+        int endZ = Mathf.Max(start.z, end.z);
+
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int y = startY; y <= endY; y++)
+            {
+                for (int z = startZ; z <= endZ; z++)
+                {
+                    SpawnEntityAt(skuId, new Vector3Int(x, y, z));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a random SKU in every cell of the grid.
+    /// </summary>
+    private void _spawnRandom()
+    {
+        for (int x = 0; x < Grid.GridDimension.x; x++)
+        {
+            for (int y = 0; y < Grid.GridDimension.y; y++)
+            {
+                for (int z = 0; z < Grid.GridDimension.z; z++)
+                {
+                    string randomSkuId = GetRandomSKUID();
+                    SpawnEntityAt(randomSkuId, new Vector3Int(x, y, z));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Helper method to get a random SKU ID from the repository.
+    /// </summary>
+    private string GetRandomSKUID()
+    {
+        var allAssets = _skuRepository.GetAllSKUAssets();
+        if (allAssets.Count == 0)
+        {
+            Debug.LogError("No SKU assets found to spawn randomly.");
+            return null;
+        }
+        int randomIndex = Random.Range(0, allAssets.Count);
+        return allAssets[randomIndex].skuID;
     }
 
 

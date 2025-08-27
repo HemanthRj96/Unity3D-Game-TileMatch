@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0708c38eb3bdf4e82dd0aeb015fcec, type: 3}
+  m_Name: CameraConfig_Test Config
+  m_EditorClassIdentifier: 
+  rotationSensitivity: 2
+  zoomSensitivity: 10
+  rotationSmoothTime: 0.3
+  zoomSmoothTime: 0.3
+  lookAtSmoothTime: 0.5
+  defaultArmLength: 60
+  minZoomDistance: 50
+  maxZoomDistance: 100
+  minPitchAngle: 15
+  maxPitchAngle: 50
+  floatingFrequency: 0
+  floatingAmplitude: 0
+  zoomInOffset: 5
+  zoomReturnTime: 2
+  zoomOutResetThreshold: 10
+  gizmoColor: {r: 1, g: 0.038701307, b: 0.015686274, a: 1}
+  gizmoSphereRadius: 1

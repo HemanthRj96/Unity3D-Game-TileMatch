@@ -9,7 +9,7 @@ using UnityEditor;
 /// This is the main data bank that stores all the information about SKUs and serves as a static database for any script
 /// This list can be populated manually or automatically using CSV files
 /// </summary>
-[CreateAssetMenu(fileName = "SKU Asset Repository", menuName = "Create SKU Asset Repository")]
+[CreateAssetMenu(fileName = "SKU Asset Repository", menuName = "SWB/SKU/Create SKU Asset Repository")]
 public class SKUAssetRepository : ScriptableObject
 {
     // Fields

@@ -95,21 +95,26 @@ public class GridCellSelector : MonoBehaviour
         // Tiles should be thin, so we set the Z scale to 1.
         scaleValue.z = 1;
 
-        foreach (var cell in grid)
+        for (int x = 0; x < grid.GridDimension.x; ++x)
         {
-            var tile = Instantiate(_gridTilePrefab, grid.GetCellCenter(cell.Index) - tileZOffset, Quaternion.identity, transform);
-            tile.name = $"GridTile_{cell.Index.x}_{cell.Index.y}_{cell.Index.z}";
-
-            tile.transform.localScale = scaleValue;
-
-            // Add GridTile component and set its index.
-            GridTile gridTileComponent = tile.AddComponent<GridTile>();
-            gridTileComponent.Index = cell.Index;
-
-            // Store the default material.
-            if (tile.TryGetComponent<Renderer>(out Renderer rend))
+            for (int y = 0; y < grid.GridDimension.y; ++y)
             {
-                rend.material = _defaultMaterial;
+                var cell = _gridManager.Grid.GetCell(x, y, 0);
+
+                var tile = Instantiate(_gridTilePrefab, grid.GetCellCenter(cell.Index) - tileZOffset, Quaternion.identity, transform);
+                tile.name = $"GridTile_{cell.Index.x}_{cell.Index.y}_{cell.Index.z}";
+
+                tile.transform.localScale = scaleValue;
+
+                // Add GridTile component and set its index.
+                GridTile gridTileComponent = tile.AddComponent<GridTile>();
+                gridTileComponent.Index = cell.Index;
+
+                // Store the default material.
+                if (tile.TryGetComponent<Renderer>(out Renderer rend))
+                {
+                    rend.material = _defaultMaterial;
+                }
             }
         }
     }
