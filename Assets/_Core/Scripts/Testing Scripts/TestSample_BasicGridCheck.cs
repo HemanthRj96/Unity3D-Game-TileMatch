@@ -13,7 +13,7 @@ public class TestSample_BasicGridCheck : MonoBehaviour
     public float time = 1.0f;
     public int loopCount = 10;
 
-    string skuID => UnityEngine.Random.Range(1, 7).ToString();
+    string skuID => UnityEngine.Random.Range(1, 3).ToString();
 
 
 
@@ -31,7 +31,7 @@ public class TestSample_BasicGridCheck : MonoBehaviour
 
 
             Debug.Log($"Loop {l}, Step 2");
-            for (int y = 0; y <= endIndex.x; ++y)
+            for (int y = 0; y <= endIndex.y; ++y)
             {
                 manager.SpawnComplexPattern(GridManager.PatternType.Row, skuID, new Vector3Int(0, y, 0));
                 yield return new WaitForSeconds(time);
@@ -40,7 +40,7 @@ public class TestSample_BasicGridCheck : MonoBehaviour
 
 
             Debug.Log($"Loop {l}, Step 3");
-            for (int x = 0; x <= endIndex.y; ++x)
+            for (int x = 0; x <= endIndex.x; ++x)
             {
                 manager.SpawnComplexPattern(GridManager.PatternType.Column, skuID, new Vector3Int(x, 0, 0));
                 yield return new WaitForSeconds(time);

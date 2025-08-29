@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 /// <summary>
 /// A ScriptableObject to hold all configurable camera settings.
 /// This allows for easy management and reuse of camera configurations
@@ -33,7 +31,8 @@ public class CameraConfig : ScriptableObject
     [Header("Dynamic Zoom")]
     public float zoomInOffset = 5f;
     public float zoomReturnTime = 2.0f;
-    public float zoomOutResetThreshold = 5.0f;
+    [Tooltip("The percentage above minZoomDistance required to exit focus mode. (e.g., 0.25 for 25%)")]
+    public float zoomOutResetThreshold = 0.25f;
 
     [Header("Gizmos")]
     public Color gizmoColor = Color.yellow;

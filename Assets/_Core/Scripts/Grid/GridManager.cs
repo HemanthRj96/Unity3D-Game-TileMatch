@@ -190,6 +190,11 @@ public class GridManager : MonoBehaviour
     }
 
 
+    public SKUEntity GetEntityAt(Vector3Int index)
+    {
+        return Grid.GetCellContent(index);
+    }
+
     /// <summary>
     /// Get all SKUs in a specific row with an optional count limit.
     /// </summary>
@@ -213,7 +218,6 @@ public class GridManager : MonoBehaviour
         }
         return rowEntities;
     }
-
 
     /// <summary>
     /// Get all SKUs in a specific column with an optional count limit.
@@ -313,6 +317,11 @@ public class GridManager : MonoBehaviour
     {
         // Grid preparation
         Grid = new Grid<SKUEntity>(_gridConfig.gridOffset + transform.position, _gridConfig.gridDimension, _gridConfig.cellDimension);
+
+        // Dynamically resize and set the gap arrays.
+        ResizeAndSetGaps();
+
+        Grid.SetGaps(_gridConfig.rowGaps, _gridConfig.columnGaps, _gridConfig.depthGaps);
         Grid.PrepareGrid();
     }
 
@@ -321,9 +330,36 @@ public class GridManager : MonoBehaviour
         if (Application.isPlaying) return;
         if (_gridConfig.shouldDrawGizmos == false) return;
 
-        // We re-instantiate the grid here to allow for editor gizmo drawing without play mode.
+        // Re-instantiate the grid and prepare it for gizmo drawing.
         Grid = new Grid<SKUEntity>(_gridConfig.gridOffset + transform.position, _gridConfig.gridDimension, _gridConfig.cellDimension);
+
+        // Dynamically resize and set the gap arrays for gizmo drawing.
+        ResizeAndSetGaps();
+
+        Grid.SetGaps(_gridConfig.rowGaps, _gridConfig.columnGaps, _gridConfig.depthGaps);
         Grid.DrawGridGizmos(_gridConfig.gridLineColor);
+    }
+
+    /// <summary>
+    /// Ensures the gap arrays match the grid dimensions and resizes them if necessary.
+    /// This keeps the inspector consistent.
+    /// </summary>
+    private void ResizeAndSetGaps()
+    {
+        if (_gridConfig.rowGaps == null || _gridConfig.rowGaps.Length != _gridConfig.gridDimension.x)
+        {
+            _gridConfig.rowGaps = new float[_gridConfig.gridDimension.x];
+        }
+
+        if (_gridConfig.columnGaps == null || _gridConfig.columnGaps.Length != _gridConfig.gridDimension.y)
+        {
+            _gridConfig.columnGaps = new float[_gridConfig.gridDimension.y];
+        }
+
+        if (_gridConfig.depthGaps == null || _gridConfig.depthGaps.Length != _gridConfig.gridDimension.z)
+        {
+            _gridConfig.depthGaps = new float[_gridConfig.gridDimension.z];
+        }
     }
 
 
@@ -462,5 +498,11 @@ public class GridManager : MonoBehaviour
         public bool shouldDrawGizmos = false;
         [SerializeField]
         public Color gridLineColor = Color.green;
+
+        // New fields for gap configuration
+        [Header("Gaps")]
+        public float[] rowGaps;
+        public float[] columnGaps;
+        public float[] depthGaps;
     }
 }

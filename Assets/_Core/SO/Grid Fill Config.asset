@@ -12,25 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd175dd644049c419cac15595b63e0f, type: 3}
   m_Name: Grid Fill Config
   m_EditorClassIdentifier: 
-  FrontLayerSkus:
-  - skuId: 1
-    count: 12
-  - skuId: 3
-    count: 9
-  - skuId: 4
-    count: 9
-  - skuId: 5
-    count: 6
-  - skuId: 6
-    count: 7
-  - skuId: 8
-    count: 6
-  - skuId: 9
-    count: 5
-  - skuId: 10
-    count: 6
+  FrontLayerSkus: []
   FillDirection: 0
-  FillMode: 0
+  FillMode: 1
   PlaceholderSkuIds:
-  - 3
-  - 2
+  - -1

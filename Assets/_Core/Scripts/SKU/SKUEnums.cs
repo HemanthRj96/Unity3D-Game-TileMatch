@@ -3,7 +3,7 @@
     Coke,
     Sprite,
     SmartWater,
-    Powerade,
+    Fanta,
     None
 }
 

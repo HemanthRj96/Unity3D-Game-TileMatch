@@ -1,12 +1,8 @@
 using UnityEngine;
+using System;
+using static UnityEngine.GraphicsBuffer;
 
 
-
-/// <summary>
-/// Implements a "God View" or "Overhead Map" camera controller with a pivot-arm system.
-/// This version includes a specific "Focus Mode" that locks rotation and allows
-/// for persistent manual zoom on a target.
-/// </summary>
 public class GodViewCameraController : MonoBehaviour
 {
     // Defines the camera's operational mode
@@ -15,6 +11,9 @@ public class GodViewCameraController : MonoBehaviour
         Free, // Standard orbit, pan, and zoom
         Focus // Zoomed in on a target, rotation locked
     }
+
+    // The event that fires when the camera enters Focus Mode
+    public event Action OnFocusZoomSettled;
 
     [Header("Camera Configuration")]
     public CameraConfig cameraConfig;
@@ -35,6 +34,7 @@ public class GodViewCameraController : MonoBehaviour
     private Vector3 _floatingVelocity;
     private float _targetZoom;
     private float _targetZoomVelocity;
+    private bool _isZoomSettled = true; // Flag to ensure the event fires only once per zoom
 
     private CameraMode _currentMode = CameraMode.Free;
 
@@ -89,7 +89,6 @@ public class GodViewCameraController : MonoBehaviour
     void LateUpdate()
     {
         ApplyDampening();
-        ApplyOrganicFloating();
     }
 
     /// <summary>
@@ -98,16 +97,7 @@ public class GodViewCameraController : MonoBehaviour
     private void HandleInput()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        switch (_currentMode)
-        {
-            case CameraMode.Free:
-                HandleFreeModeInput(scroll);
-                break;
-            case CameraMode.Focus:
-                HandleFocusModeInput(scroll);
-                break;
-        }
+        HandleFreeModeInput(scroll);
     }
 
     /// <summary>
@@ -131,27 +121,9 @@ public class GodViewCameraController : MonoBehaviour
         {
             _targetZoom -= scroll * cameraConfig.zoomSensitivity;
             _targetZoom = Mathf.Clamp(_targetZoom, cameraConfig.minZoomDistance, cameraConfig.maxZoomDistance);
-        }
-    }
 
-    /// <summary>
-    /// Handles input when the camera is in Focus Mode.
-    /// </summary>
-    /// <param name="scroll">The scroll wheel input value.</param>
-    private void HandleFocusModeInput(float scroll)
-    {
-        // Only allow zooming. Rotation is locked.
-        if (Mathf.Abs(scroll) > 0)
-        {
-            _targetZoom -= scroll * cameraConfig.zoomSensitivity;
-            _targetZoom = Mathf.Clamp(_targetZoom, cameraConfig.minZoomDistance, cameraConfig.maxZoomDistance);
-        }
-
-        // Check if we've zoomed out enough to exit focus mode
-        float resetThreshold = cameraConfig.minZoomDistance * (1 + cameraConfig.zoomOutResetThreshold);
-        if (_currentArmLength > resetThreshold)
-        {
-            ExitFocusMode();
+            // A new zoom is starting from scroll input, so we haven't settled yet
+            _isZoomSettled = false;
         }
     }
 
@@ -187,70 +159,37 @@ public class GodViewCameraController : MonoBehaviour
             cameraPos.y = 0;
             mainCamera.transform.position = cameraPos;
         }
+
+        // Check if the camera has finished zooming and fire the event
+        if (!_isZoomSettled && Mathf.Approximately(_currentArmLength, _targetZoom))
+        {
+            _isZoomSettled = true;
+            OnFocusZoomSettled?.Invoke();
+        }
     }
 
-    /// <summary>
-    /// Adds a subtle, smooth floating movement to the camera's final position.
-    /// </summary>
-    private void ApplyOrganicFloating()
-    {
-        float time = Time.time * cameraConfig.floatingFrequency;
-        Vector3 newOffset = new Vector3(
-            Mathf.PerlinNoise(time, 0) * 2 - 1,
-            Mathf.PerlinNoise(0, time) * 2 - 1,
-            0);
 
-        _floatingOffset = Vector3.SmoothDamp(_floatingOffset, newOffset * cameraConfig.floatingAmplitude, ref _floatingVelocity, 1.0f);
-        mainCamera.transform.position += _floatingOffset;
-    }
+    float currentZoom;
+    Transform tempT;
 
     /// <summary>
     /// Public method to set the camera's look-at target and enter focus mode.
     /// </summary>
     public void EnterFocusMode(Transform target)
     {
+        tempT = lookAtTransform;
+        currentZoom = _targetZoom;
         lookAtTransform = target;
-        // NOTE: We no longer set _currentLookAtPosition here to allow for smooth transitions.
-        _currentMode = CameraMode.Focus;
-        _targetZoom = cameraConfig.minZoomDistance; // Snap to minimum zoom when entering focus mode
+        _targetZoom = cameraConfig.minZoomDistance;
+
+        // Reset the settled flag since a new zoom is beginning
+        _isZoomSettled = false;
     }
 
-    /// <summary>
-    /// Public method to exit focus mode and return to the default state.
-    /// </summary>
     public void ExitFocusMode()
     {
-        lookAtTransform = null; // Look at the default anchor
-        _currentMode = CameraMode.Free;
-        _targetZoom = cameraConfig.defaultArmLength; // Return to default zoom
-    }
-
-    /// <summary>
-    /// Draws gizmos in the Scene view for easy setup and visualization.
-    /// </summary>
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = cameraConfig.gizmoColor;
-        Gizmos.DrawSphere(transform.position, cameraConfig.gizmoSphereRadius);
-        if (mainCamera != null) Gizmos.DrawLine(transform.position, mainCamera.transform.position);
-        Gizmos.color = Color.green;
-        if (mainCamera != null) Gizmos.DrawSphere(mainCamera.transform.position, cameraConfig.gizmoSphereRadius);
-        Gizmos.color = cameraConfig.gizmoColor;
-        DrawWireCircle(transform.position, transform.up, _currentArmLength, 32);
-    }
-
-    /// <summary>
-    /// Helper function to draw a wire circle.
-    /// </summary>
-    private void DrawWireCircle(Vector3 center, Vector3 normal, float radius, int segments)
-    {
-        Quaternion rotation = Quaternion.LookRotation(normal);
-        Vector3 startPoint = rotation * Vector3.forward * radius;
-        for (int i = 0; i <= segments; i++)
-        {
-            Vector3 endPoint = rotation * Quaternion.Euler(0, (float)i / segments * 360f, 0) * Vector3.forward * radius;
-            Gizmos.DrawLine(center + startPoint, center + endPoint);
-            startPoint = endPoint;
-        }
+        lookAtTransform = tempT;
+        _targetZoom = currentZoom;
+        _isZoomSettled = false;
     }
 }

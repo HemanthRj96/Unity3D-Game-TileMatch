@@ -2,15 +2,5 @@ sku ID,sku name,brand,category type,packaging size,is single serve,container typ
 1,Coke Classic,Coke,SSD,_20Oz,TRUE,PET,Cold,Cold_Vault,SKU
 2,Sprite Zero Sugar,Sprite,SSD,_12Oz_Slim,TRUE,Can,Cold,Cold_Vault,SKU
 3,SmartWater Pure,SmartWater,Still,_20Oz,TRUE,PET,Both,Perimeter,SKU
-4,Powerade Fruit Punch,Powerade,Isotonic,_16Oz,TRUE,PET,Cold,Cold_Vault,SKU
+4,Fanta Orange,Fanta,Isotonic,_16Oz,TRUE,PET,Cold,Cold_Vault,SKU
 5,Coke Diet,Coke,SSD,_12Oz_Slim,TRUE,Can,Cold,Cold_Vault,SKU
-6,Sprite Grape,Sprite,SSD,_20Oz,TRUE,PET,Cold,Cold_Vault,SKU
-7,SmartWater Berry,SmartWater,Still,_13_2Oz,TRUE,Glass,Ambient,FoodService,SKU
-8,Powerade Strawberry,Powerade,Isotonic,_16Oz,TRUE,PET,Cold,Cold_Vault,SKU
-9,Coke Cherry,Coke,SSD,_20Oz,TRUE,PET,Cold,Cold_Vault,SKU
-10,Sprite Lemon,Sprite,SSD,_12Oz_Slim,TRUE,Can,Cold,Cold_Vault,SKU
-11,SmartWater Sport,SmartWater,Still,_20Oz,TRUE,PET,Both,Perimeter,SKU
-12,Powerade Blue Raspberry,Powerade,Isotonic,_16Oz,TRUE,PET,Cold,Cold_Vault,SKU
-13,Coke Vanilla,Coke,SSD,_12Oz_Slim,TRUE,Can,Cold,Cold_Vault,SKU
-14,Sprite Ginger,Sprite,SSD,_20Oz,TRUE,PET,Cold,Cold_Vault,SKU
-15,SmartWater Kiwi,SmartWater,Still,_13_2Oz,TRUE,Glass,Ambient,FoodService,SKU

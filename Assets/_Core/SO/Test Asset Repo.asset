@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9fa7b52554b2b744a1cc233acd01fa5, type: 3}
-  m_Name: SKU Asset Repository
+  m_Name: Test Asset Repo
   m_EditorClassIdentifier: 
   _assets:
   - displayName: Coke Classic
@@ -59,7 +59,7 @@ MonoBehaviour:
       color: {r: 0, g: 0, b: 0, a: 0}
   - displayName: SmartWater Pure
     skuID: 3
-    prefab: {fileID: 1075101437711589768, guid: 3ef0270229034134ea2861a707728264, type: 3}
+    prefab: {fileID: 1075101437711589768, guid: dfea05da883ba224e96baf272b4905f5, type: 3}
     icon: {fileID: 0}
     brandComponent:
       brand: 2
@@ -79,7 +79,7 @@ MonoBehaviour:
     genericMatchComponent:
       value: 0
       color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Fruit Punch
+  - displayName: Fanta Orange
     skuID: 4
     prefab: {fileID: 1075101437711589768, guid: 6a2b1b9db0e8db74e978d91e26d793a9, type: 3}
     icon: {fileID: 0}
@@ -123,78 +123,12 @@ MonoBehaviour:
     genericMatchComponent:
       value: 0
       color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Grape
-    skuID: 6
-    prefab: {fileID: 1075101437711589768, guid: 3dab6f7f146951f44b76142335f78a4c, type: 3}
+  - displayName: Place Holder
+    skuID: -1
+    prefab: {fileID: 1075101437711589768, guid: 013f968938f4abc4fa017facb5b85e9f, type: 3}
     icon: {fileID: 0}
     brandComponent:
-      brand: 1
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Powerade Strawberry
-    skuID: 8
-    prefab: {fileID: 1075101437711589768, guid: 6a2b1b9db0e8db74e978d91e26d793a9, type: 3}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 3
-    categoryComponent:
-      category: 3
-    packagingInfoComponent:
-      size: 2
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Coke Cherry
-    skuID: 9
-    prefab: {fileID: 1075101437711589768, guid: 83f430d1d44b2b444bdb31ce8f8c077f, type: 3}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 0
-    categoryComponent:
-      category: 0
-    packagingInfoComponent:
-      size: 3
-      containerType: 1
-      isSingleServe: 1
-    temperatureInfoComponent:
-      type: 0
-      isColdCompatible: 1
-    zoneComponent:
-      zoneType: 3
-    entityTypeComponent:
-      entityType: 0
-    genericMatchComponent:
-      value: 0
-      color: {r: 0, g: 0, b: 0, a: 0}
-  - displayName: Sprite Lemon
-    skuID: 10
-    prefab: {fileID: 1075101437711589768, guid: f4b354b039f9d564cae0284670f54426, type: 3}
-    icon: {fileID: 0}
-    brandComponent:
-      brand: 1
+      brand: 4
     categoryComponent:
       category: 0
     packagingInfoComponent:

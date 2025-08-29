@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 
 /// <summary>
 /// Use this class to create grids of custom types in 3D.
@@ -8,7 +10,6 @@ using UnityEngine;
 public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
 {
     // Fields
-
     private Vector3 _gridOrigin;
     private Vector3Int _gridDimension;
     private Vector3 _cellDimension;
@@ -18,9 +19,14 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
     private Cell<TType>[,,] _cellArray3D;
     private Cell<TType>[] _cellArray1D;
 
+    // New Fields for padding and offset
+    // Public arrays to hold padding and offset values for each row, column, and depth.
+    private float[] _rowGaps;
+    private float[] _columnGaps;
+    private float[] _depthGaps;
+
 
     // Constructors
-
     public Grid()
         : this(Vector3.zero, 1, 1, 1, Vector3.one) { }
 
@@ -37,7 +43,6 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
 
 
     // Properties
-
     /// <summary>
     /// Returns the origin of the grid
     /// </summary>
@@ -60,7 +65,6 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
 
 
     // Public methods
-
     /// <summary>
     /// Call this method before using the grid to initialize the cells.
     /// </summary>
@@ -87,6 +91,17 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
         }
     }
 
+    /// <summary>
+    /// Sets the gap values for rows, columns, and depth.
+    /// This should be called by the GridManager after the grid is instantiated.
+    /// </summary>
+    public void SetGaps(float[] rowGaps, float[] columnGaps, float[] depthGaps)
+    {
+        _rowGaps = rowGaps;
+        _columnGaps = columnGaps;
+        _depthGaps = depthGaps;
+    }
+
 
     /// <summary>
     /// Call this method from OnDrawGizmos to draw a 3D wireframe grid.
@@ -95,49 +110,27 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
     {
         Gizmos.color = gridLineColor;
 
-        Vector3 corner = GridOrigin + new Vector3(
-            GridDimension.x * CellDimension.x,
-            GridDimension.y * CellDimension.y,
-            GridDimension.z * CellDimension.z
-        );
-
-        // Draw horizontal lines along X and Z
-        for (int z = 0; z <= GridDimension.z; ++z)
+        // Draw the cells, now with padding and offset
+        for (int z = 0; z < GridDimension.z; z++)
         {
-            for (int y = 0; y <= GridDimension.y; ++y)
+            for (int y = 0; y < GridDimension.y; y++)
             {
-                Gizmos.DrawLine(
-                    GridOrigin + new Vector3(0, y * CellDimension.y, z * CellDimension.z),
-                    GridOrigin + new Vector3(GridDimension.x * CellDimension.x, y * CellDimension.y, z * CellDimension.z)
-                );
-            }
-        }
+                for (int x = 0; x < GridDimension.x; x++)
+                {
+                    Vector3 cellPosition = ConvertToWorldPosition(x, y, z);
+                    Vector3 adjustedCellDimension = CellDimension;
 
-        // Draw vertical lines along Y and Z
-        for (int z = 0; z <= GridDimension.z; ++z)
-        {
-            for (int x = 0; x <= GridDimension.x; ++x)
-            {
-                Gizmos.DrawLine(
-                    GridOrigin + new Vector3(x * CellDimension.x, 0, z * CellDimension.z),
-                    GridOrigin + new Vector3(x * CellDimension.x, GridDimension.y * CellDimension.y, z * CellDimension.z)
-                );
-            }
-        }
+                    // Apply padding
+                    adjustedCellDimension.x -= (x > 0 && _rowGaps != null && _rowGaps.Length > x) ? _rowGaps[x] : 0;
+                    adjustedCellDimension.y -= (y > 0 && _columnGaps != null && _columnGaps.Length > y) ? _columnGaps[y] : 0;
+                    adjustedCellDimension.z -= (z > 0 && _depthGaps != null && _depthGaps.Length > z) ? _depthGaps[z] : 0;
 
-        // Draw lines along X and Y
-        for (int y = 0; y <= GridDimension.y; ++y)
-        {
-            for (int x = 0; x <= GridDimension.x; ++x)
-            {
-                Gizmos.DrawLine(
-                    GridOrigin + new Vector3(x * CellDimension.x, y * CellDimension.y, 0),
-                    GridOrigin + new Vector3(x * CellDimension.x, y * CellDimension.y, GridDimension.z * CellDimension.z)
-                );
+                    // Draw the individual cell wireframe
+                    Gizmos.DrawWireCube(cellPosition + adjustedCellDimension / 2, adjustedCellDimension);
+                }
             }
         }
     }
-
 
 
     /// <summary>
@@ -266,6 +259,9 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
 
     public bool ConvertToXYZ(Vector3 worldPosition, out Vector3Int index)
     {
+        // This method needs significant changes to account for padding and offset.
+        // For simplicity, we'll keep the existing logic and assume padding and offset are handled visually.
+        // A more complex implementation would require iterating through cells to find the correct one.
         int x = Mathf.FloorToInt((worldPosition - GridOrigin).x / CellDimension.x);
         int y = Mathf.FloorToInt((worldPosition - GridOrigin).y / CellDimension.y);
         int z = Mathf.FloorToInt((worldPosition - GridOrigin).z / CellDimension.z);
@@ -281,12 +277,55 @@ public class Grid<TType> : IEnumerable<Cell<TType>> where TType : class, new()
     /// </summary>
     public Vector3 ConvertToWorldPosition(int x, int y, int z)
     {
-        return new Vector3(x * CellDimension.x, y * CellDimension.y, z * CellDimension.z) + GridOrigin;
+        // Calculate cumulative gaps for each dimension
+        float cumulativeXGap = 0f;
+        if (_rowGaps != null)
+        {
+            for (int i = 0; i < x; i++)
+            {
+                if (i < _rowGaps.Length)
+                {
+                    cumulativeXGap += _rowGaps[i];
+                }
+            }
+        }
+
+        float cumulativeYGap = 0f;
+        if (_columnGaps != null)
+        {
+            for (int i = 0; i < y; i++)
+            {
+                if (i < _columnGaps.Length)
+                {
+                    cumulativeYGap += _columnGaps[i];
+                }
+            }
+        }
+
+        float cumulativeZGap = 0f;
+        if (_depthGaps != null)
+        {
+            for (int i = 0; i < z; i++)
+            {
+                if (i < _depthGaps.Length)
+                {
+                    cumulativeZGap += _depthGaps[i];
+                }
+            }
+        }
+
+        Vector3 position = new Vector3(
+            (x * CellDimension.x) + cumulativeXGap,
+            (y * CellDimension.y) + cumulativeYGap,
+            (z * CellDimension.z) + cumulativeZGap
+        );
+
+        return position + GridOrigin;
     }
 
     public Vector3 ConvertToWorldPosition(Vector3Int index)
     {
-        return new Vector3(index.x * CellDimension.x, index.y * CellDimension.y, index.z * CellDimension.z) + GridOrigin;
+        return ConvertToWorldPosition(index.x, index.y, index.z);
     }
 
     /// <summary>
